@@ -1,7 +1,7 @@
 function [n_resi_after_atk, worst_atk_rate_resi, ...
     com_fd, t_fd] = ...
         fully_distri_resi_fun(tar_set_rtra, ...
-        nonovlap_cliqs_G, n_tars_max_rtra, max_rtra_inx)
+        nonovlap_cliqs_G, n_tars_max_rtra, max_rtra_inx, com_cliq_form, t_cliq_form)
     tic;
     % give the trajectory assignments for the robots in each clique
     r_tra_resi = []; 
@@ -23,10 +23,10 @@ function [n_resi_after_atk, worst_atk_rate_resi, ...
         end
     end
     % store the running time of the algorithm
-    t_fd = toc/length(nonovlap_cliqs_G);
+    t_fd = toc/length(nonovlap_cliqs_G) + t_cliq_form;
     % calculate the communication, contains two parts, one from cliq formulation
     % one from the fully distribtued algorithm. 
-    com_fd =  sum(com_in_cliq); 
+    com_fd =  max(com_in_cliq) + com_cliq_form; 
     % calculate the number of evaluations of the algorithm, choose the max
     % among the cliques
     eav_fd = max(eva_in_cliq);

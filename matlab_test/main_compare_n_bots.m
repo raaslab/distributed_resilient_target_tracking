@@ -8,9 +8,9 @@
 clear all;
 global Nr N_tra Nt N_atk nei_range track_range
 
-Nt = 50;
+Nt = 60;
 
-N_trials = 30;
+N_trials = 10;
   
 % the # of robots, 
 min_num_bots = 10; 
@@ -38,7 +38,7 @@ for Nr =  min_num_bots : max_num_bots
         tar_pos = rand(Nt,2)*pos_range;
         
      % find all the non-overlapping maximal cliques
-    [nonovlap_cliqs_G, n_cliqs_G(i, Nr), cliq_num_G(i, Nr), com_cliq_form] = ...
+    [nonovlap_cliqs_G, n_cliqs_G(i, Nr), cliq_num_G(i, Nr), com_cliq_form, t_cliq_form] = ...
         nonoverlap_cliqs_fun(r_pos);   
     
     % obtain a set of targets tracked by each trajectory
@@ -55,12 +55,12 @@ for Nr =  min_num_bots : max_num_bots
     % fully distribtued resilient
     [n_dis_resi(i, Nr), rate_dis_resi(i, Nr), com_dis_resi(i, Nr), t_dis_resi(i, Nr)] = ...
         fully_distri_resi_fun(tar_set_rtra, ...
-        nonovlap_cliqs_G, n_tars_max_rtra, max_rtra_inx);
+        nonovlap_cliqs_G, n_tars_max_rtra, max_rtra_inx, com_cliq_form, t_cliq_form);
     
     % fully distribtued greedy
     [n_dis_gre(i, Nr), rate_dis_gre(i, Nr), ...
          com_dis_gre(i, Nr), t_dis_gre(i, Nr)] = ...
-        fully_distri_gre_fun(tar_set_rtra, nonovlap_cliqs_G);
+        fully_distri_gre_fun(tar_set_rtra, nonovlap_cliqs_G, com_cliq_form, t_cliq_form);
     
 %     % fully distributed oblivious
 %     [n_dis_obv(i, Nr), rate_dis_obv(i, Nr), ...
