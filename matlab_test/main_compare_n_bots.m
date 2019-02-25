@@ -10,11 +10,11 @@ global Nr N_tra Nt N_atk nei_range track_range
 
 Nt = 60;
 
-N_trials = 10;
+N_trials = 30;
   
 % the # of robots, 
 min_num_bots = 10; 
-max_num_bots = 30; 
+max_num_bots = 20; 
 
 % the # of worst-case attacks
 N_atk = 5; 
@@ -23,7 +23,7 @@ N_atk = 5;
 N_tra = 4; 
 
 % neighbor range, within the distance, be carefully!!!
-nei_range = 30;
+nei_range = 60;
 
 % target tracking range
 track_range = 10; 
