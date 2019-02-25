@@ -1,6 +1,6 @@
 %Timer: constantly receive the pos of all the models in the gazebo and pick the
 %trajectory for each uav
-clc;
+cla; clear all;
 %subscribe the gazebo pose topic to get the pos_info of each uav and each
 %ground target
 global T cnt
@@ -44,7 +44,7 @@ N_fail_uavs = 4; % number of failed uavs
 N_resilience_uavs = N_uavs - N_fail_uavs; %number of resilient uavs
 
 % communication, neighbor range for the clique formulation
-nei_range = 5; 
+nei_range = 8; 
 
 tars_pos_true = zeros(N_tars, 3); % x, y, z
 tars_pos_hat = zeros(N_tars, 3);  %may have some problem!!!!!!
@@ -56,7 +56,7 @@ for i =  1 : N_tars
     tars_sigma(2*i-1 :2*i, : )  = eye(2); 
 end
 
-err_offset = 1.2;
+err_offset = 1.8;
 
 store_n_after_remo = [];
 store_n_cliqs =[];
@@ -68,12 +68,12 @@ store_com = [];
 %uavs_ini_pos = [0, -5, 2; 5, 0, 3; -2, 5, 4; -5, 0, 5];
 %uavs_ini_pos = [-3, -5, 2; -2, -5 3; -1,-5, 4]; 
 uavs_ini_pos = [0, -7, 0; 2, -7, 0; 4, -6, 0; 0, 8, 0; 6, -4, 0; ...
-    2, 8, 0; -6, 0, 0; -6, -2, 0; 7, 0, 0; 5, -2, 0];
+    2, 8, 0; -6, 0, 0; -4, -5, 0; 7, 0, 0; 5, -2, 0];
 
 uavs_pos = zeros(N_uavs,3); %x, y ,z
 
-desired_pos_track = [0, -7, 2; 2, -7, 3; 4, -6, 4; 0, 8, 5; 6, -4, 6; ...
-    2, 8, 7; -6, 0, 8; -6, -2, 9; 7, 0, 10; 5, -2, 11];
+desired_pos_track = [0, -7, 1.5; 2, -7, 2; 4, -6, 2.5; 0, 8, 3; 6, -4, 3.5; ...
+    2, 8, 4; -6, 0, 4.5; -4, -5, 5; 7, 0, 5.5; 5, -2, 6];
 
 N_dir_uav = 4; % each uav has four trajectories it can choose
 

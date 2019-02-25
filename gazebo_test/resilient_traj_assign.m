@@ -29,8 +29,11 @@ function resilient_traj_assign(target_cover, n_id_maxtra)
     
     % after getting the trajectories for all the robots, tested by worst attack
     [n_after_atk]= worst_attack(target_cover, r_tra_assign);
+    
+    % here we give a fake cliq id for the publisher 
+    cliq_id  = zeros(N_uavs, 1);
 
     %desired pos_publish, keep publishing desired for each uav
     %collect the targets tracked after removal, t_run, communication
-    desired_pos_publisher_cen(traj_assign, n_after_atk, t_run, com);    
+    desired_pos_publisher_cen(traj_assign, n_after_atk, cliq_id,  t_run, com);    
 end

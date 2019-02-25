@@ -1,7 +1,7 @@
 % publish the desired pos for each uav in ros-network
 % we first calculate the desired pos for each uav in gazebo global pos
 % then transform to a local desired pos for python.receiver for control
-function desired_pos_publisher_cen(traj_assign, n_after_remo, t_run, com)
+function desired_pos_publisher_cen(traj_assign, n_after_remo, cliq_id,  t_run, com)
 
     global uavs_ini_pos 
     
@@ -15,9 +15,11 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, t_run, com)
     
     global store_n_after_remo store_t_run store_com  
         
-    global work_status_pub_uavs work_status_uavs
+    global work_status_pub_uavs work_status_uavs cliq_id_pub_uavs cliq_id_uavs
         
     global opt_attacked_uavs
+    
+    global cnt
     
     % each uav has a desired x, y ,z
     desired_pos_global = zeros(N_uavs, 3); % in the gazebo on global frame
@@ -55,17 +57,17 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, t_run, com)
         
     end
     
-    if  norm(uavs_pos(1,:) - desired_pos_track(1,:))<= err_offset &&...
-        norm(uavs_pos(2,:) - desired_pos_track(2,:))<= err_offset &&...
-        norm(uavs_pos(3,:) - desired_pos_track(3,:))<= err_offset &&...
-        norm(uavs_pos(4,:) - desired_pos_track(4,:))<= err_offset &&...
-        norm(uavs_pos(5,:) - desired_pos_track(5,:))<= err_offset &&...
-        norm(uavs_pos(6,:) - desired_pos_track(6,:))<= err_offset &&...
-        norm(uavs_pos(7,:) - desired_pos_track(7,:))<= err_offset &&...
-        norm(uavs_pos(8,:) - desired_pos_track(8,:))<= err_offset &&...
-        norm(uavs_pos(9,:) - desired_pos_track(9,:))<= err_offset &&...
-        norm(uavs_pos(10,:) - desired_pos_track(10,:))<= err_offset
-
+    if  mod(cnt, 10) == 0
+%         norm(uavs_pos(8,:) - desired_pos_track(8,:))<= err_offset &&...
+%         norm(uavs_pos(9,:) - desired_pos_track(9,:))<= err_offset &&...
+%         norm(uavs_pos(10,:) - desired_pos_track(10,:))<= err_offset 
+%         norm(uavs_pos(1,:) - desired_pos_track(1,:))<= err_offset &&...
+%         norm(uavs_pos(2,:) - desired_pos_track(2,:))<= err_offset &&...
+%         norm(uavs_pos(3,:) - desired_pos_track(3,:))<= err_offset &&...
+%         norm(uavs_pos(4,:) - desired_pos_track(4,:))<= err_offset &&...
+%         norm(uavs_pos(5,:) - desired_pos_track(5,:))<= err_offset &&...
+%         norm(uavs_pos(6,:) - desired_pos_track(6,:))<= err_offset &&...
+%         norm(uavs_pos(7,:) - desired_pos_track(7,:))<= err_offset &&...
         desired_pos_track(:,1:2) = desired_pos_global(:,1:2);
         
         for i = 1 : N_uavs 
@@ -74,8 +76,8 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, t_run, com)
            else 
                work_status_uavs(i).Data = 1; 
            end
-%            % give cliq_id for each uav
-%            cliq_id_uavs(i).Data = cliq_id(i); 
+           % give cliq_id for each uav
+           cliq_id_uavs(i).Data = cliq_id(i); 
         end
         %also store the data
         store_n_after_remo = [store_n_after_remo, n_after_remo];
@@ -86,8 +88,8 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, t_run, com)
         
         %doing some plots to show tar_before_removal, tar_after_remove,
         %remove_rate           
-%         figure(1); 
-%         cla; hold on;
+         figure(1); 
+         cla; hold on;
 %         subplot(3,1,1);
 %         plot(store_tar_before_remove, '--ro', 'LineWidth',2,...
 %                        'MarkerEdgeColor','g',...
@@ -96,12 +98,11 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, t_run, com)
 %         title('Number of targets tracked before optimal removal')
 % 
 %         subplot(3,1,2); 
-%         plot(store_tar_after_remove,'--rs', 'LineWidth',2,...
-%                        'MarkerEdgeColor','b',...
-%                        'MarkerFaceColor','b',...
-%                        'MarkerSize',10)
-%         
-%         title('Number of remaining targets after optimal removal')
+        plot(store_n_after_remo,'rs', 'LineWidth',2,...
+                       'MarkerEdgeColor','r',...
+                       'MarkerFaceColor','r',...
+                       'MarkerSize',8)       
+        title('Number of remaining targets after optimal removal')
 %         
 %         subplot(3,1,3); 
 %         plot(store_remove_rate,'--r*', 'LineWidth',2,...
@@ -110,7 +111,7 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, t_run, com)
 %                        'MarkerSize',10)
 %         title(' Optimal removal rate')
 %         
-%         hold off;
+         hold off;
         
     else  % the robots havn't gone to the desired positions 
 
@@ -132,8 +133,8 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, t_run, com)
         %publish the uav_work status
         send(work_status_pub_uavs(i), work_status_uavs(i));    
         
-%         %publish cliq id for each uav
-%         send(cliq_id_pub_uavs(i), cliq_id_uavs(i)); 
+        %publish cliq id for each uav
+        send(cliq_id_pub_uavs(i), cliq_id_uavs(i)); 
 
     end
           

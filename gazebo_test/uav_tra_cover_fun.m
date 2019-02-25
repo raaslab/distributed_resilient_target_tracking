@@ -9,7 +9,7 @@ global N_dir_uav
 
 global uavs_pos tars_pos 
 
-global track_length track_width sta_track_length
+global track_length track_width sta_track_length fly_length
 
 
  target_cover = cell(N_uavs, N_dir_uav);
@@ -21,6 +21,7 @@ global track_length track_width sta_track_length
  
  for i = 1 : N_uavs
      
+     dis_origin = zeros(N_dir_uav, 1); % gien the distance to the origin after flying each trajectory
      for j = 1 : N_dir_uav % each robot has N_dir_uav directions
          
          if j == 1 % up direction
@@ -33,6 +34,7 @@ global track_length track_width sta_track_length
                     target_cover{i,j}=[target_cover{i,j}, k]; % store the targets can be tracked if the distance is within tolerance
                  end
              end
+             dis_origin(j) = norm([uavs_pos(i,1), uavs_pos(i,2) + fly_length]);  
              
          elseif j == 2 % down direction
              
@@ -43,7 +45,8 @@ global track_length track_width sta_track_length
                      
                     target_cover{i,j}=[target_cover{i,j}, k]; % store the targets can be tracked if the distance is within tolerance
                  end
-             end             
+             end
+             dis_origin(j) = norm([uavs_pos(i,1), uavs_pos(i,2)- fly_length]);
              
                 
          elseif j == 3 % right direction
@@ -55,7 +58,8 @@ global track_length track_width sta_track_length
                      
                     target_cover{i,j}=[target_cover{i,j}, k]; % store the targets can be tracked if the distance is within tolerance
                  end
-             end                 
+             end
+             dis_origin(j) = norm([uavs_pos(i,1) + fly_length, uavs_pos(i,2)]);
              
              
          else % left direction
@@ -70,13 +74,19 @@ global track_length track_width sta_track_length
              end                              
              
          end
-         
+         dis_origin(j) = norm([uavs_pos(i,1) - fly_length, uavs_pos(i,2)]);
          
      n_target_cover(i,j) = length(target_cover{i,j});     
      end
      
      % find the number of targets covered by max_traj
-     %the id of max_traj
+     % the id of max_traj
+     % need to be modifiled to guarantee robust. 
      [n_id_maxtra(i,1), n_id_maxtra(i,2)]= max(n_target_cover(i,:)); 
+     
+     if all(n_target_cover(i,:) == n_target_cover(i,1)) % all equal, the uav needs come back to the center.
+         [~, dis_min_inx] = min(dis_origin);
+         n_id_maxtra(i,2) = dis_min_inx;
+     end
  end
 end 

@@ -98,11 +98,15 @@ uavs_pos = uavs_pos_local + uavs_ini_pos;
   % bf_traj_assign(target_cover);
  
  % 2nd resilient 
-  resilient_traj_assign(target_cover, n_id_maxtra);  
+ % resilient_traj_assign(target_cover, n_id_maxtra);  
+  
+ % distributed resilient
+  distri_resi_traj_assign(target_cover, n_id_maxtra)
  
- % 3rd greedy
-   % greedy_traj_assign(target_cover);
- 
+ % distributed greedy
+ % greedy_traj_assign(target_cover);
+ %distri_gre_traj_assign(target_cover)
+  
  % 4th random
   % random_traj_assign(target_cover);
  end
