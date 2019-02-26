@@ -17,13 +17,13 @@ min_num_bots = 10;
 max_num_bots = 20; 
 
 % the # of worst-case attacks
-N_atk = 8; 
+N_atk = 3; 
 
 % the number of trajectories 
 N_tra = 4; 
 
 % neighbor range, within the distance, be carefully!!!
-nei_range = 120;
+nei_range = 30;
 
 % target tracking range
 track_range = 10; 
@@ -38,8 +38,8 @@ for Nr =  min_num_bots : max_num_bots
         tar_pos = rand(Nt,2)*pos_range;
         
      % find all the non-overlapping maximal cliques
-    [nonovlap_cliqs_G, n_cliqs_G(i, Nr), cliq_num_G(i, Nr), com_cliq_form, t_cliq_form] = ...
-        nonoverlap_cliqs_fun(r_pos);   
+    [nonovlap_cliqs_G, n_cliqs_G(i, Nr), cliq_num_G(i, Nr), ...
+        com_cliq_form(i, Nr), t_cliq_form(i, Nr)] = nonoverlap_cliqs_fun(r_pos);   
     
     % obtain a set of targets tracked by each trajectory
     [tar_set_rtra, ~, n_tars_max_rtra, max_rtra_inx] = robot_tra_cover_fun(r_pos, tar_pos);
@@ -55,12 +55,12 @@ for Nr =  min_num_bots : max_num_bots
     % fully distribtued resilient
     [n_dis_resi(i, Nr), rate_dis_resi(i, Nr), com_dis_resi(i, Nr), t_dis_resi(i, Nr)] = ...
         fully_distri_resi_fun(tar_set_rtra, ...
-        nonovlap_cliqs_G, n_tars_max_rtra, max_rtra_inx, com_cliq_form, t_cliq_form);
+        nonovlap_cliqs_G, n_tars_max_rtra, max_rtra_inx);
     
-    % fully distribtued greedy
-    [n_dis_gre(i, Nr), rate_dis_gre(i, Nr), ...
-         com_dis_gre(i, Nr), t_dis_gre(i, Nr)] = ...
-        fully_distri_gre_fun(tar_set_rtra, nonovlap_cliqs_G, com_cliq_form, t_cliq_form);
+%     % fully distribtued greedy
+%     [n_dis_gre(i, Nr), rate_dis_gre(i, Nr), ...
+%          com_dis_gre(i, Nr), t_dis_gre(i, Nr)] = ...
+%         fully_distri_gre_fun(tar_set_rtra, nonovlap_cliqs_G, com_cliq_form, t_cliq_form);
     
 %     % fully distributed oblivious
 %     [n_dis_obv(i, Nr), rate_dis_obv(i, Nr), ...
@@ -85,16 +85,16 @@ end
   figure (1); hold on; grid on;
  
   shadedErrorBar(min_num_bots : max_num_bots, n_cen_resi(:, min_num_bots : max_num_bots),...
-      {@mean,@std}, 'lineprops', ':b','patchSaturation',0.33)
+      {@mean,@std}, 'lineprops', '--b','patchSaturation',0.33)
   
   shadedErrorBar(min_num_bots : max_num_bots, n_cen_gre(:,min_num_bots : max_num_bots),...
-      {@mean,@std}, 'lineprops', '-.k','patchSaturation',0.33)
+      {@mean,@std}, 'lineprops', ':g','patchSaturation',0.33)
   
   shadedErrorBar(min_num_bots : max_num_bots, n_dis_resi(:,min_num_bots : max_num_bots),...
       {@mean,@std},'lineprops','-r','patchSaturation',0.33)
   
-  shadedErrorBar(min_num_bots : max_num_bots, n_dis_gre(:,min_num_bots : max_num_bots),...
-      {@mean,@std},'lineprops','--g','patchSaturation',0.33)  
+%   shadedErrorBar(min_num_bots : max_num_bots, n_dis_gre(:,min_num_bots : max_num_bots),...
+%       {@mean,@std},'lineprops','--g','patchSaturation',0.33)  
   
 %   shadedErrorBar(min_num_bots : max_num_bots, n_dis_obv(:,min_num_bots : max_num_bots),...
 %       {@mean,@std},'lineprops',':b','patchSaturation',0.33)   
@@ -114,10 +114,9 @@ end
 %   legend('ful_dis', 'hier_cen_o', 'hier_cen_og', 'cen_resi', 'cen_gre');
   legend('centralized resilient', 'centralized resilient average', ...
       'centralized greedy', 'centralized greedy average',...
-      'distributed resilient', 'distributed resilient average',...
-      'distributed greedy', 'distributed greedy average');
-  xlabel('number of robots','fontsize',11)
-  ylabel('coverage number','fontsize',11)  
+      'distributed resilient', 'distributed resilient average', 'FontSize',14);
+  xlabel('Number of robots','fontsize', 14)
+  ylabel('Number of targets tracked','fontsize', 14)  
   
 % %   compare the worst-case attack rate
 %     figure; hold on;grid on;
@@ -159,17 +158,20 @@ end
   % compare the communication 
   figure (2); hold on;grid on;
   
-  shadedErrorBar(min_num_bots : max_num_bots, com_cen_resi(:,min_num_bots : max_num_bots),...
-      {@mean,@std}, 'lineprops', ':b','patchSaturation',0.33)
+%   shadedErrorBar(min_num_bots : max_num_bots, com_cen_resi(:,min_num_bots : max_num_bots),...
+%       {@mean,@std}, 'lineprops', ':b','patchSaturation',0.33)
  
-  shadedErrorBar(min_num_bots : max_num_bots, com_cen_gre(:,min_num_bots : max_num_bots),...
-      {@mean,@std}, 'lineprops', '-.k','patchSaturation',0.33)  
+%   shadedErrorBar(min_num_bots : max_num_bots, com_cen_gre(:,min_num_bots : max_num_bots),...
+%       {@mean,@std}, 'lineprops', '-.k','patchSaturation',0.33)  
+
+  shadedErrorBar(min_num_bots : max_num_bots, com_cliq_form(:,min_num_bots : max_num_bots),...
+      {@mean,@std},'lineprops','--b', 'patchSaturation',0.33)
 
   shadedErrorBar(min_num_bots : max_num_bots, com_dis_resi(:,min_num_bots : max_num_bots),...
       {@mean,@std},'lineprops','-r', 'patchSaturation',0.33)
-
-  shadedErrorBar(min_num_bots : max_num_bots, com_dis_gre(:,min_num_bots : max_num_bots),...
-      {@mean,@std},'lineprops','--g', 'patchSaturation',0.33)
+  
+%   shadedErrorBar(min_num_bots : max_num_bots, com_dis_gre(:,min_num_bots : max_num_bots),...
+%       {@mean,@std},'lineprops','--g', 'patchSaturation',0.33)
   
 %   shadedErrorBar(min_num_bots : max_num_bots, com_dis_obv(:,min_num_bots : max_num_bots),...
 %       {@mean,@std},'lineprops',':b', 'patchSaturation',0.33)  
@@ -182,28 +184,29 @@ end
 %g
 
   title('comparison of communication messages','fontsize',12)
-  legend('centralized resilient', 'centralized resilient average', ...
-      'centralized greedy', 'centralized greedy average',...
-      'distributed resilient', 'distributed resilient average',...
-      'distributed greedy', 'distributed greedy average');
-  xlabel('number of robots','fontsize',11)
-  ylabel('coverage number','fontsize',11) 
+  legend('clique formulation', 'clique formulation average', ...
+      'distributed resilient', 'distributed resilient average', 'FontSize',14);
+  xlabel('Number of robots','fontsize',14)
+  ylabel('Number of communications','fontsize',14) 
           
   
   % compare the running time
   figure (3); hold on;grid on;
   
   shadedErrorBar(min_num_bots : max_num_bots, t_cen_resi(:, min_num_bots : max_num_bots),...
-      {@mean,@std}, 'lineprops', ':b','patchSaturation',0.33)
+      {@mean,@std}, 'lineprops', '--b','patchSaturation',0.33)
  
   shadedErrorBar(min_num_bots : max_num_bots, t_cen_gre(:, min_num_bots : max_num_bots),...
-      {@mean,@std}, 'lineprops', '-.k','patchSaturation',0.33)    
+      {@mean,@std}, 'lineprops', ':g','patchSaturation',0.33)    
+  
+    shadedErrorBar(min_num_bots : max_num_bots, t_cliq_form(:,min_num_bots : max_num_bots),...
+      {@mean,@std},'lineprops','-.m', 'patchSaturation',0.33)
 
   shadedErrorBar(min_num_bots : max_num_bots, t_dis_resi(:,min_num_bots : max_num_bots),...
       {@mean,@std},'lineprops','-r', 'patchSaturation',0.33)
   
-  shadedErrorBar(min_num_bots : max_num_bots, t_dis_gre(:,min_num_bots : max_num_bots),...
-      {@mean,@std},'lineprops','--g', 'patchSaturation',0.33) 
+%   shadedErrorBar(min_num_bots : max_num_bots, t_dis_gre(:,min_num_bots : max_num_bots),...
+%       {@mean,@std},'lineprops','--g', 'patchSaturation',0.33) 
 
 %   shadedErrorBar(min_num_bots : max_num_bots, eva_dis_obv(:,min_num_bots : max_num_bots),...
 %       {@mean,@std},'lineprops',':b', 'patchSaturation',0.33)    
@@ -218,10 +221,10 @@ end
   title('comparison of computational time','fontsize',12)
   legend('centralized resilient', 'centralized resilient average', ...
       'centralized greedy', 'centralized greedy average',...
-      'distributed resilient', 'distributed resilient average',...
-      'distributed greedy', 'distributed greedy average');
-  xlabel('number of robots','fontsize',11)
-  ylabel('coverage number','fontsize',11)
+      'clique formulation', 'clique formulation average',...
+      'distributed resilient', 'distributed resilient average', 'FontSize',14);
+  xlabel('Number of robots','fontsize',14)
+  ylabel('Running time','fontsize',14)
   
   % plot the number of cliques
   figure (4); hold on; grid on; 
@@ -230,6 +233,7 @@ end
   shadedErrorBar(min_num_bots : max_num_bots, cliq_num_G(:,min_num_bots : max_num_bots),...
       {@mean,@std},'lineprops','--b', 'patchSaturation',0.33)   
   title('number of cliqs and cliq number','fontsize',12)
-  legend('number of cliques', 'number of cliques average', 'clique number', 'clique number average');
-  xlabel('number of robots','fontsize',11)
-  ylabel('coverage number','fontsize',11)
+  legend('number of cliques', 'number of cliques average', 'clique number', ...
+      'clique number average', 'FontSize',14);
+  xlabel('Number of robots','fontsize',14)
+  ylabel('Number of cliques and clique number','fontsize',14)
