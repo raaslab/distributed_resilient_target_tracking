@@ -1,5 +1,5 @@
 % function: generate non-overlapping cliques among robots
-function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id] = nonoverlap_cliqs_fun(r_pos)
+function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id, com_messages, t_cliq_form] = nonoverlap_cliqs_fun(r_pos)
     % compute non-overlapping cliques on a graph G 
     % we only give a FEASIBLE distribtued solution
     global N_uavs nei_range
@@ -7,7 +7,8 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id] = nonoverlap_cliqs_
         % store robot i and its neighbors
         r_neighbor = cell(N_uavs,1);
 %         % 1st communciation: recongize neighbors
-%         com_nei = 0;
+        com_nei = zeros(N_uavs,1);
+        
         for i = 1 : N_uavs
             r_neighbor{i} = i; 
             for j = 1 : N_uavs
@@ -16,14 +17,17 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id] = nonoverlap_cliqs_
                     r_neighbor{i} = [r_neighbor{i}, j];
                 end
             end
-%             com_nei = com_nei + length(r_neighbor{i});
+               com_nei(i) = length(r_neighbor{i});
         end
 %         % it is an undirected graph so that the communication is repeated once
 %         com_nei = com_nei/2;
 %         % 2nd communication: share neighbors' neighbors;
-%         com_nei = com_nei*2; 
+        com_nei = com_nei * 2; 
         % neighbor's neighbors are used to compute the clqiue by intersection
         % store the clqiues for each r
+        
+        % start computation
+        tic; 
         r_in_cliq = cell(N_uavs,1); 
 %         % communication for each robot: which clique and change clique.  
 %         com_neinei = zeros(1, N_uavs);
@@ -106,14 +110,16 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id] = nonoverlap_cliqs_
 %                         for   c_in = 1 : length(r_in_cliq{i})
 %                             com_r_in_cliq = com_r_in_cliq + length(r_neighbor(r_in_cliq{i}(c_in)));
 %                         end
-%                         com_neinei(i) = com_neinei(i) + com_r_in_cliq;
+                        com_nei(i) = com_nei(i) + length(r_neighbor{i});
                         break;
                     end
                 end    
         end
 %         %total communication is equal to the neighber and neihgbors's neighbor and
 %         % tell neighbor its clique
-%         com_messages = com_nei + sum(com_neinei); 
+         com_messages = max(com_nei); 
+        % running time
+        t_cliq_form = toc/N_uavs; 
         % calculate the non overlap cliques
         % store all non-overlapping clqiues
         nonoverlap_cliqs = { }; 

@@ -88,32 +88,32 @@ function desired_pos_publisher_dis(traj_assign, cliq_id, n_after_remo, ...
         
         %doing some plots to show tar_before_removal, tar_after_remove,
         %remove_rate           
-        figure (1); 
-        cla; hold on;
-%         subplot(3,1,1);
-        plot(store_n_after_remo,'--rs', 'LineWidth',2,...
-                       'MarkerEdgeColor','b',...
-                       'MarkerFaceColor','b',...
-                       'MarkerSize',8)
-        
-        title('Number of remaining targets after optimal removal')
-        
-%         subplot(3,1,2); 
-%         plot(store_tar_before_remove, '--ro', 'LineWidth',2,...
-%                        'MarkerEdgeColor','g',...
-%                        'MarkerFaceColor','g',...
-%                        'MarkerSize',10)
-%         title('Number of targets tracked before optimal removal')        
-        
+%         figure (1); 
+%         cla; hold on;
+% %         subplot(3,1,1);
+%         plot(store_n_after_remo,'--rs', 'LineWidth',2,...
+%                        'MarkerEdgeColor','b',...
+%                        'MarkerFaceColor','b',...
+%                        'MarkerSize',8)
 %         
-%         subplot(3,1,3); 
-%         plot(store_remove_rate,'--r*', 'LineWidth',2,...
-%                        'MarkerEdgeColor','m',...
-%                        'MarkerFaceColor','m',...
-%                        'MarkerSize',10)
-%         title(' Optimal removal rate')
+%         title('Number of remaining targets after optimal removal')
 %         
-         hold off;
+% %         subplot(3,1,2); 
+% %         plot(store_tar_before_remove, '--ro', 'LineWidth',2,...
+% %                        'MarkerEdgeColor','g',...
+% %                        'MarkerFaceColor','g',...
+% %                        'MarkerSize',10)
+% %         title('Number of targets tracked before optimal removal')        
+%         
+% %         
+% %         subplot(3,1,3); 
+% %         plot(store_remove_rate,'--r*', 'LineWidth',2,...
+% %                        'MarkerEdgeColor','m',...
+% %                        'MarkerFaceColor','m',...
+% %                        'MarkerSize',10)
+% %         title(' Optimal removal rate')
+% %         
+%          hold off;
         
     else  % the robots havn't gone to the desired positions 
 
@@ -122,6 +122,8 @@ function desired_pos_publisher_dis(traj_assign, cliq_id, n_after_remo, ...
     for i = 1 : N_uavs
 
         %then calculate the desired pos in local gazebo frame 
+        %desired_pos_local(i,:) = [0, 0, 0];
+        
         desired_pos_local(i,:) = desired_pos_track(i,:) - uavs_ini_pos(i,:);
 
         %once we have the local desired pos, publish it on uav, this
@@ -137,8 +139,6 @@ function desired_pos_publisher_dis(traj_assign, cliq_id, n_after_remo, ...
         
         %publish cliq id for each uav
         send(cliq_id_pub_uavs(i), cliq_id_uavs(i)); 
-
     end
-          
     
 end

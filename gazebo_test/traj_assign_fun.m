@@ -86,7 +86,6 @@ uavs_pos = uavs_pos_local + uavs_ini_pos;
 %                   gz_model_states.Pose(N_targets+5).Position.Z];                
          
  
-
  %***after receive the pos from uavs and targets
  [target_cover, n_id_maxtra] = uav_tra_cover_fun();
  
@@ -100,12 +99,15 @@ uavs_pos = uavs_pos_local + uavs_ini_pos;
  % 2nd resilient 
  % resilient_traj_assign(target_cover, n_id_maxtra);  
   
+ % greedy 
+ % greedy_traj_assign(target_cover);
+  
  % distributed resilient
-  distri_resi_traj_assign(target_cover, n_id_maxtra)
+   distri_resi_traj_assign(target_cover, n_id_maxtra)
  
  % distributed greedy
- % greedy_traj_assign(target_cover);
- %distri_gre_traj_assign(target_cover)
+
+ % distri_gre_traj_assign(target_cover)
   
  % 4th random
   % random_traj_assign(target_cover);

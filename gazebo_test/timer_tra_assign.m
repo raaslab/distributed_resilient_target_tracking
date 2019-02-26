@@ -38,13 +38,14 @@ global store_n_after_remo store_n_cliqs store_cliq_num store_t_run store_com
 
 
 N_uavs = 10; % number of uavs 
+
 N_tars = 50; % number of targets
 
-N_fail_uavs = 4; % number of failed uavs
+N_fail_uavs = 5; % number of failed uavs
 N_resilience_uavs = N_uavs - N_fail_uavs; %number of resilient uavs
 
 % communication, neighbor range for the clique formulation
-nei_range = 8; 
+nei_range = 5; 
 
 tars_pos_true = zeros(N_tars, 3); % x, y, z
 tars_pos_hat = zeros(N_tars, 3);  %may have some problem!!!!!!
