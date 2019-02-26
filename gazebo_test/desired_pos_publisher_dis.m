@@ -14,11 +14,13 @@ function desired_pos_publisher_dis(traj_assign, cliq_id, n_after_remo, ...
     
     global desired_pos_pub_uavs desired_pub_msg err_offset desired_pos_track
     
-    global store_n_after_remo store_n_cliqs store_cliq_num store_t_run store_com  
+    global store_n_after_remo store_n_cliqs store_cliq_num store_t store_com  
         
     global work_status_pub_uavs work_status_uavs cliq_id_pub_uavs cliq_id_uavs
         
     global opt_attacked_uavs
+    
+    global com_cliq_form t_cliq_form store_t_cliq store_com_cliq
     
     % each uav has a desired x, y ,z
     desired_pos_global = zeros(N_uavs, 3); % in the gazebo on global frame
@@ -81,9 +83,14 @@ function desired_pos_publisher_dis(traj_assign, cliq_id, n_after_remo, ...
         end
         %also store the data
         store_n_after_remo = [store_n_after_remo, n_after_remo];
+        
         store_n_cliqs  = [store_n_cliqs, n_cliqs];
-        store_cliq_num = [store_cliq_num, cliq_num]; 
-        store_t_run = [store_t_run, t_run];
+        store_cliq_num = [store_cliq_num, cliq_num];
+        
+        store_t_cliq = [store_t_cliq, t_cliq_form]; 
+        store_com_cliq = [store_com_cliq, com_cliq_form];
+        
+        store_t = [store_t, t_run];
         store_com = [store_com, com]; 
         
         %doing some plots to show tar_before_removal, tar_after_remove,

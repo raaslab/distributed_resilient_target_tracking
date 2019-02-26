@@ -32,7 +32,7 @@ global err_offset
     
 global tars_pos_true tars_pos_hat  tars_sigma  tars_pos_last  tars_t_last  tars_v
 
-global store_n_after_remo store_n_cliqs store_cliq_num store_t_run store_com
+global store_n_after_remo store_n_cliqs store_cliq_num store_t store_com store_t_cliq store_com_cliq
 
 %global desired_pos_global
 
@@ -62,8 +62,10 @@ err_offset = 1.8;
 store_n_after_remo = [];
 store_n_cliqs =[];
 store_cliq_num =[];
-store_t_run = [];
+store_t = [];
 store_com = [];
+store_t_cliq = [];
+store_com_cliq = [];
 
 %uavs_ini_pos = [0, -5, 2; 3, -2, 3; 5, 0, 4; -2, 5, 5; -5, 0, 6];
 %uavs_ini_pos = [0, -5, 2; 5, 0, 3; -2, 5, 4; -5, 0, 5];

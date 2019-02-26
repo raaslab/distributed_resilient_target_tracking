@@ -9,6 +9,8 @@ function distri_resi_traj_assign(target_cover, n_id_maxtra)
     
     global uavs_pos
     
+    global com_messages t_cliq_form
+    
     % first step, clique formulation
     % find all the non-overlapping maximal cliques, we only need x and y
     % coordinations
@@ -43,7 +45,7 @@ function distri_resi_traj_assign(target_cover, n_id_maxtra)
     t_run = toc/length(nonovlap_cliqs_G) + t_cliq_form;    
     
     % calculate the communication
-    com = max(com_in_cliq) + com_messages;
+    com = max(com_in_cliq);
     
     % give value from r_tra_assign to traj_assign for publisher 
     for i = 1 : N_uavs

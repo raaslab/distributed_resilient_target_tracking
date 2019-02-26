@@ -1,8 +1,9 @@
 % function: generate non-overlapping cliques among robots
-function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id, com_messages, t_cliq_form] = nonoverlap_cliqs_fun(r_pos)
+function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id] = nonoverlap_cliqs_fun(r_pos)
     % compute non-overlapping cliques on a graph G 
     % we only give a FEASIBLE distribtued solution
     global N_uavs nei_range
+    global com_cliq_form t_cliq_form
     
         % store robot i and its neighbors
         r_neighbor = cell(N_uavs,1);
@@ -117,7 +118,7 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id, com_messages, t_cli
         end
 %         %total communication is equal to the neighber and neihgbors's neighbor and
 %         % tell neighbor its clique
-         com_messages = max(com_nei); 
+         com_cliq_form = max(com_nei); 
         % running time
         t_cliq_form = toc/N_uavs; 
         % calculate the non overlap cliques
