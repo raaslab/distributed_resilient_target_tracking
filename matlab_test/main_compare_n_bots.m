@@ -17,13 +17,13 @@ min_num_bots = 10;
 max_num_bots = 20; 
 
 % the # of worst-case attacks
-N_atk = 5; 
+N_atk = 8; 
 
 % the number of trajectories 
 N_tra = 4; 
 
 % neighbor range, within the distance, be carefully!!!
-nei_range = 60;
+nei_range = 120;
 
 % target tracking range
 track_range = 10; 
