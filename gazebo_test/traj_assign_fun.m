@@ -94,7 +94,7 @@ uavs_pos = uavs_pos_local + uavs_ini_pos;
  % brute_force, resilient, greedy and random
 
  % 1st brute_force
-  % bf_traj_assign(target_cover);
+ % bf_traj_assign(target_cover);
  
  % 2nd resilient 
  % resilient_traj_assign(target_cover, n_id_maxtra);  

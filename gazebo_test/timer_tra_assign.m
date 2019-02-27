@@ -41,7 +41,7 @@ N_uavs = 10; % number of uavs
 
 N_tars = 50; % number of targets
 
-N_fail_uavs = 5; % number of failed uavs
+N_fail_uavs = 4; % number of failed uavs
 N_resilience_uavs = N_uavs - N_fail_uavs; %number of resilient uavs
 
 % communication, neighbor range for the clique formulation
@@ -62,8 +62,10 @@ err_offset = 1.8;
 store_n_after_remo = [];
 store_n_cliqs =[];
 store_cliq_num =[];
+
 store_t = [];
 store_com = [];
+
 store_t_cliq = [];
 store_com_cliq = [];
 

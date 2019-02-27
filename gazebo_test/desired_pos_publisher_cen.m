@@ -13,7 +13,7 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, cliq_id,  t_run, c
     
     global desired_pos_pub_uavs desired_pub_msg err_offset desired_pos_track
     
-    global store_n_after_remo store_t_run store_com  
+    global store_n_after_remo store_t store_com  
         
     global work_status_pub_uavs work_status_uavs cliq_id_pub_uavs cliq_id_uavs
         
@@ -57,7 +57,7 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, cliq_id,  t_run, c
         
     end
     
-    if  mod(cnt, 10) == 0
+    if  mod(cnt, 9) == 0
 %         norm(uavs_pos(8,:) - desired_pos_track(8,:))<= err_offset &&...
 %         norm(uavs_pos(9,:) - desired_pos_track(9,:))<= err_offset &&...
 %         norm(uavs_pos(10,:) - desired_pos_track(10,:))<= err_offset 
@@ -83,7 +83,7 @@ function desired_pos_publisher_cen(traj_assign, n_after_remo, cliq_id,  t_run, c
         store_n_after_remo = [store_n_after_remo, n_after_remo];
 %         store_n_cliqs  = [store_n_cliqs, n_cliqs];
 %         store_cliq_num = [store_cliq_num, cliq_num]; 
-        store_t_run = [store_t_run, t_run];
+        store_t = [store_t, t_run];
         store_com = [store_com, com]; 
         
         %doing some plots to show tar_before_removal, tar_after_remove,
