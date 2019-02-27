@@ -5,4 +5,6 @@ boxplot(store_n_tar')
 
 boxplot(store_run_time')
 
-boxplot(store_com_cliq')
+boxplot(store_comm')
+
+boxplot(store_cliq')
