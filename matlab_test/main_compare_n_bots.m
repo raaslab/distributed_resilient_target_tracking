@@ -17,13 +17,13 @@ min_num_bots = 10;
 max_num_bots = 20; 
 
 % the # of worst-case attacks
-N_atk = 3; 
+N_atk = 4; 
 
 % the number of trajectories 
 N_tra = 4; 
 
 % neighbor range, within the distance, be carefully!!!
-nei_range = 30;
+nei_range = 70;
 
 % target tracking range
 track_range = 10; 
@@ -164,11 +164,12 @@ end
 %   shadedErrorBar(min_num_bots : max_num_bots, com_cen_gre(:,min_num_bots : max_num_bots),...
 %       {@mean,@std}, 'lineprops', '-.k','patchSaturation',0.33)  
 
+  shadedErrorBar(min_num_bots : max_num_bots, com_dis_resi(:,min_num_bots : max_num_bots),...
+      {@mean,@std},'lineprops','-r', 'patchSaturation',0.33)
+
   shadedErrorBar(min_num_bots : max_num_bots, com_cliq_form(:,min_num_bots : max_num_bots),...
       {@mean,@std},'lineprops','--b', 'patchSaturation',0.33)
 
-  shadedErrorBar(min_num_bots : max_num_bots, com_dis_resi(:,min_num_bots : max_num_bots),...
-      {@mean,@std},'lineprops','-r', 'patchSaturation',0.33)
   
 %   shadedErrorBar(min_num_bots : max_num_bots, com_dis_gre(:,min_num_bots : max_num_bots),...
 %       {@mean,@std},'lineprops','--g', 'patchSaturation',0.33)
@@ -184,8 +185,8 @@ end
 %g
 
   title('comparison of communication messages','fontsize',12)
-  legend('clique formulation', 'clique formulation average', ...
-      'distributed resilient', 'distributed resilient average', 'FontSize',14);
+  legend('distributed resilient', 'distributed resilient average',...
+      'clique cover', 'clique cover average', 'FontSize',14);
   xlabel('Number of robots','fontsize',14)
   ylabel('Number of communications','fontsize',14) 
           
@@ -199,11 +200,13 @@ end
   shadedErrorBar(min_num_bots : max_num_bots, t_cen_gre(:, min_num_bots : max_num_bots),...
       {@mean,@std}, 'lineprops', ':g','patchSaturation',0.33)    
   
-    shadedErrorBar(min_num_bots : max_num_bots, t_cliq_form(:,min_num_bots : max_num_bots),...
-      {@mean,@std},'lineprops','-.m', 'patchSaturation',0.33)
-
   shadedErrorBar(min_num_bots : max_num_bots, t_dis_resi(:,min_num_bots : max_num_bots),...
       {@mean,@std},'lineprops','-r', 'patchSaturation',0.33)
+  
+  shadedErrorBar(min_num_bots : max_num_bots, t_cliq_form(:,min_num_bots : max_num_bots),...
+      {@mean,@std},'lineprops','-.m', 'patchSaturation',0.33)
+
+
   
 %   shadedErrorBar(min_num_bots : max_num_bots, t_dis_gre(:,min_num_bots : max_num_bots),...
 %       {@mean,@std},'lineprops','--g', 'patchSaturation',0.33) 
@@ -221,8 +224,8 @@ end
   title('comparison of computational time','fontsize',12)
   legend('centralized resilient', 'centralized resilient average', ...
       'centralized greedy', 'centralized greedy average',...
-      'clique formulation', 'clique formulation average',...
-      'distributed resilient', 'distributed resilient average', 'FontSize',14);
+      'distributed resilient', 'distributed resilient average',...
+      'clique cover', 'clique cover average','FontSize',14);
   xlabel('Number of robots','fontsize',14)
   ylabel('Running time','fontsize',14)
   
