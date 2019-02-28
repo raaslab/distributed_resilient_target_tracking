@@ -17,7 +17,7 @@ min_num_bots = 10;
 max_num_bots = 20; 
 
 % the # of worst-case attacks
-N_atk = 4; 
+N_atk = 5; 
 
 % the number of trajectories 
 N_tra = 4; 
