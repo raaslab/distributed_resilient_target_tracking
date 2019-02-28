@@ -2,13 +2,13 @@
 % we only give a FEASIBLE distribtued solution
 
 % the number of robots, 
-Nr = 20;
+Nr = 10;
 % give the postions of all robots
 r_pos = zeros(Nr,2);
 r_pos(:, 1) = 100 * rand(Nr, 1);
 r_pos(:, 2) = 100 * rand(Nr, 1);
 
-nei_range = 30;
+nei_range = 70;
 
 % plot positions
 figure(1);

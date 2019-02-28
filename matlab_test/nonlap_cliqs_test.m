@@ -2,7 +2,7 @@
 % we only give a FEASIBLE distribtued solution
 
 % the number of robots, 
-Nr = 30;
+Nr = 10;
 % give the postions of all robots
 r_pos = zeros(Nr,2);
 r_pos(:, 1) = 100 * rand(Nr, 1);
