@@ -18,7 +18,7 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id] = nonoverlap_cliqs_
                     r_neighbor{i} = [r_neighbor{i}, j];
                 end
             end
-               com_nei(i) = length(r_neighbor{i});
+               com_nei(i) = length(r_neighbor{i})-1;
         end
 %         % it is an undirected graph so that the communication is repeated once
 %         com_nei = com_nei/2;
@@ -116,9 +116,9 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, cliq_id] = nonoverlap_cliqs_
                     end
                 end    
         end
-%         %total communication is equal to the neighber and neihgbors's neighbor and
-%         % tell neighbor its clique
-         com_cliq_form = max(com_nei); 
+%      %total communication is equal to the neighber and neihgbors's neighbor and
+%      % tell neighbor its clique
+        com_cliq_form = max(com_nei); 
         % running time
         t_cliq_form = toc/N_uavs; 
         % calculate the non overlap cliques

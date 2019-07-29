@@ -7,7 +7,7 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, com_messages, t_cliq_form] =
   
         % store robot i and its neighbors
         r_neighbor = cell(Nr,1);
-        % 1st communciation: recongize neighbors
+        % 1st communication: recongize neighbors
         com_nei = zeros(Nr, 1);
         for i = 1 : Nr
             r_neighbor{i} = i; 
@@ -17,7 +17,7 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, com_messages, t_cliq_form] =
                     r_neighbor{i} = [r_neighbor{i}, j];
                 end
             end
-            com_nei(i) = length(r_neighbor{i});
+            com_nei(i) = length(r_neighbor{i})-1;
         end
         
         % 2nd communication: share neighbors' neighbors;
@@ -26,7 +26,7 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, com_messages, t_cliq_form] =
         % start computation
         tic; 
         % neighbor's neighbors are used to compute the clqiue by intersection
-        % store the clqiues for each r
+        % store the clqiue for each r
         r_in_cliq = cell(Nr,1); 
 
         for i = 1 : Nr %for all the robots
@@ -115,7 +115,7 @@ function [nonoverlap_cliqs, num_of_cliqs, cliq_num, com_messages, t_cliq_form] =
         end
         %total communication is equal to the neighber and neihgbors's neighbor and
         % tell neighbor its clique
-        com_messages = max(com_nei); 
+        com_messages = sum(com_nei); 
         % running time
         t_cliq_form = toc/Nr; 
         % calculate the non overlap cliques

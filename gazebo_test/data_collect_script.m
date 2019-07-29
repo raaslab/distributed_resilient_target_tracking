@@ -4,7 +4,7 @@
 n = 50;
 
 store_n_tar = zeros(3,n);
-store_run_time = zeros(4,n);
+store_run_time = zeros(3,n);
 
 %
 load('centralized_resilient3.mat')
@@ -24,7 +24,7 @@ store_n_tar(3,1:n) = store_n_after_remo(1:n);
 % store_n_tar(3,1) = 11;
 
 store_run_time(3,1:n) = store_t(1:n);
-store_run_time(4,1:n) =store_t_cliq(1:n);
+% store_run_time(4,1:n) =store_t_cliq(1:n);
 
 store_com_cliq(1,1:n) = store_com(1:n);
 store_com_cliq(2,1:n) = store_com_cliq(1:n);

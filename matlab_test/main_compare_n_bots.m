@@ -17,7 +17,7 @@ min_num_bots = 10;
 max_num_bots = 20; 
 
 % the # of worst-case attacks
-N_atk = 5; 
+N_atk = 4; 
 
 % the number of trajectories 
 N_tra = 4; 
@@ -39,7 +39,7 @@ for Nr =  min_num_bots : max_num_bots
         
      % find all the non-overlapping maximal cliques
     [nonovlap_cliqs_G, n_cliqs_G(i, Nr), cliq_num_G(i, Nr), ...
-        com_cliq_form(i, Nr), t_cliq_form(i, Nr)] = nonoverlap_cliqs_fun(r_pos);   
+        com_cliq_form(i, Nr), t_cliq_form(i, Nr)] = effi_nonoverlap_cliqs_fun(r_pos);   
     
     % obtain a set of targets tracked by each trajectory
     [tar_set_rtra, ~, n_tars_max_rtra, max_rtra_inx] = robot_tra_cover_fun(r_pos, tar_pos);
