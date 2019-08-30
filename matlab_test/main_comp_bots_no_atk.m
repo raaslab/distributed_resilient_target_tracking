@@ -14,7 +14,7 @@ N_trials = 30;
   
 % the # of robots, 
 min_num_bots = 10; 
-max_num_bots = 20; 
+max_num_bots = 100; 
 
 % the # of worst-case attacks
 N_atk = 4; 
@@ -23,7 +23,7 @@ N_atk = 4;
 N_tra = 4; 
 
 % neighbor range, within the distance, be carefully!!!
-nei_range = 70;
+nei_range = 50;
 
 % target tracking range
 track_range = 10; 
@@ -45,15 +45,15 @@ for Nr =  min_num_bots : max_num_bots
     [tar_set_rtra, ~, n_tars_max_rtra, max_rtra_inx] = robot_tra_cover_fun(r_pos, tar_pos);
     
     % centralized resilient algorithm
-    [n_cen_resi(i, Nr), rate_cen_resi(i, Nr), com_cen_resi(i, Nr), t_cen_resi(i, Nr)] = ...
+    [com_cen_resi(i, Nr), t_cen_resi(i, Nr)] = ...
         cen_resi_fun(robot_set_G, tar_set_rtra, n_tars_max_rtra, max_rtra_inx);
     
     % centralized greedy algorithm
-    [n_cen_gre(i, Nr), rate_cen_gre(i, Nr), com_cen_gre(i, Nr), t_cen_gre(i, Nr)] = ...
+    [com_cen_gre(i, Nr), t_cen_gre(i, Nr)] = ...
         cen_gre_fun(robot_set_G, tar_set_rtra); 
    
     % fully distribtued resilient
-    [n_dis_resi(i, Nr), rate_dis_resi(i, Nr), com_dis_resi(i, Nr), t_dis_resi(i, Nr)] = ...
+    [com_dis_resi(i, Nr), t_dis_resi(i, Nr)] = ...
         distri_resi_fun(tar_set_rtra, ...
         nonovlap_cliqs_G, n_tars_max_rtra, max_rtra_inx);
     
@@ -80,43 +80,43 @@ for Nr =  min_num_bots : max_num_bots
  
     end
 end
-% plots 
-  % compare the number of the remaining targets
-  figure (1); hold on; grid on;
- 
-  shadedErrorBar(min_num_bots : max_num_bots, n_cen_resi(:, min_num_bots : max_num_bots),...
-      {@mean,@std}, 'lineprops', '--b','patchSaturation',0.33)
-  
-  shadedErrorBar(min_num_bots : max_num_bots, n_cen_gre(:,min_num_bots : max_num_bots),...
-      {@mean,@std}, 'lineprops', ':g','patchSaturation',0.33)
-  
-  shadedErrorBar(min_num_bots : max_num_bots, n_dis_resi(:,min_num_bots : max_num_bots),...
-      {@mean,@std},'lineprops','-r','patchSaturation',0.33)
-  
-%   shadedErrorBar(min_num_bots : max_num_bots, n_dis_gre(:,min_num_bots : max_num_bots),...
-%       {@mean,@std},'lineprops','--g','patchSaturation',0.33)  
-  
-%   shadedErrorBar(min_num_bots : max_num_bots, n_dis_obv(:,min_num_bots : max_num_bots),...
-%       {@mean,@std},'lineprops',':b','patchSaturation',0.33)   
-
-%   shadedErrorBar(min_num_bots : max_num_bots, n_hier_cen_o(:,min_num_bots : max_num_bots),...
-%       {@mean,@std},'lineprops',':b','patchSaturation',0.33);
+% % plots 
+%   % compare the number of the remaining targets
+%   figure (1); hold on; grid on;
+%  
+%   shadedErrorBar(min_num_bots : max_num_bots, n_cen_resi(:, min_num_bots : max_num_bots),...
+%       {@mean,@std}, 'lineprops', '--b','patchSaturation',0.33)
+%   
+%   shadedErrorBar(min_num_bots : max_num_bots, n_cen_gre(:,min_num_bots : max_num_bots),...
+%       {@mean,@std}, 'lineprops', ':g','patchSaturation',0.33)
+%   
+%   shadedErrorBar(min_num_bots : max_num_bots, n_dis_resi(:,min_num_bots : max_num_bots),...
+%       {@mean,@std},'lineprops','-r','patchSaturation',0.33)
+%   
+% %   shadedErrorBar(min_num_bots : max_num_bots, n_dis_gre(:,min_num_bots : max_num_bots),...
+% %       {@mean,@std},'lineprops','--g','patchSaturation',0.33)  
+%   
+% %   shadedErrorBar(min_num_bots : max_num_bots, n_dis_obv(:,min_num_bots : max_num_bots),...
+% %       {@mean,@std},'lineprops',':b','patchSaturation',0.33)   
 % 
-%   shadedErrorBar(min_num_bots : max_num_bots, n_hier_cen_og(:,min_num_bots : max_num_bots),...
-%       {@mean,@std}, 'lineprops', '-.k','patchSaturation',0.33)
-% '--m', '-y'
-
-  title('comparison of the numebr of remaining targets tracked','fontsize',12)
-%   legend('centralized resilient', 'centralized resilient, average', ...
-%       'distributed resilient', 'distributed resilient, average',...
-%       'distributed greedy', 'distributed greedy, average');
-%     legend('', 'centralized resilient', '', 'centralized greedy', '', 'distributed resilient');
-%   legend('ful_dis', 'hier_cen_o', 'hier_cen_og', 'cen_resi', 'cen_gre');
-  legend('centralized resilient', 'centralized resilient average', ...
-      'centralized greedy', 'centralized greedy average',...
-      'distributed resilient', 'distributed resilient average', 'FontSize',14);
-  xlabel('Number of robots','fontsize', 14)
-  ylabel('Number of targets tracked','fontsize', 14)  
+% %   shadedErrorBar(min_num_bots : max_num_bots, n_hier_cen_o(:,min_num_bots : max_num_bots),...
+% %       {@mean,@std},'lineprops',':b','patchSaturation',0.33);
+% % 
+% %   shadedErrorBar(min_num_bots : max_num_bots, n_hier_cen_og(:,min_num_bots : max_num_bots),...
+% %       {@mean,@std}, 'lineprops', '-.k','patchSaturation',0.33)
+% % '--m', '-y'
+% 
+%   title('comparison of the numebr of remaining targets tracked','fontsize',12)
+% %   legend('centralized resilient', 'centralized resilient, average', ...
+% %       'distributed resilient', 'distributed resilient, average',...
+% %       'distributed greedy', 'distributed greedy, average');
+% %     legend('', 'centralized resilient', '', 'centralized greedy', '', 'distributed resilient');
+% %   legend('ful_dis', 'hier_cen_o', 'hier_cen_og', 'cen_resi', 'cen_gre');
+%   legend('centralized resilient', 'centralized resilient average', ...
+%       'centralized greedy', 'centralized greedy average',...
+%       'distributed resilient', 'distributed resilient average', 'FontSize',14);
+%   xlabel('Number of robots','fontsize', 14)
+%   ylabel('Number of targets tracked','fontsize', 14)  
   
 % %   compare the worst-case attack rate
 %     figure; hold on;grid on;
