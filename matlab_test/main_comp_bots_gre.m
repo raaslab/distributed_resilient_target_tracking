@@ -16,22 +16,23 @@ N_trials = 30;
 min_num_bots = 10; 
 max_num_bots = 100; 
 
-% the # of worst-case attacks
-N_atk = 4; 
+
+% the number of trajectories 
+N_tra = 4;
 
 % neighbor range, within the distance, be carefully!!!
-nei_range = 50;
+nei_range = 70;
 
 % target tracking range
 track_range = 10; 
 
 % the range of robot position
-pos_range = 100;
+pos_range = 200;
 
 for Nr =  min_num_bots : max_num_bots
     
-    % the number of trajectories 
-    N_tra = floor(Nr/3);
+    % the # of worst-case attacks
+    N_atk = floor(Nr/3); 
     
     robot_set_G = (1 : Nr);
     for i = 1 : N_trials
