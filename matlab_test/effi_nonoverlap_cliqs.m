@@ -5,19 +5,19 @@
 global Nr nei_range
 
 % the number of robots, 
-Nr = 30;
+Nr = 100;
 % give the postions of all robots
 r_pos = zeros(Nr,2);
-r_pos(:, 1) = 100 * rand(Nr, 1);
-r_pos(:, 2) = 100 * rand(Nr, 1);
+r_pos(:, 1) = 200 * rand(Nr, 1);
+r_pos(:, 2) = 200 * rand(Nr, 1);
 
-nei_range = 40;
+nei_range = 50;
 
 % plot positions
 figure(1);
 axis equal; box on; hold on;
-xlim([0 100]);
-ylim([0 100]);
+xlim([0 200]);
+ylim([0 200]);
 
 % r_pos = [43.736097320218107  93.410446177255096
 %   83.629640732425003  47.750709597826159
